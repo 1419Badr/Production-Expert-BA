@@ -220,3 +220,24 @@ else:
         }
         pdf_bytes = create_comprehensive_pdf(st.session_state['user_factory'], s_date, res)
         st.download_button("تحميل الملف الآن", data=pdf_bytes, file_name="Full_Report.pdf")
+        # --- إضافة عجلة المؤشر ---
+st.markdown("---") # خط فاصل لشكل أشيك
+st.subheader("📊 مؤشر أداء الإنتاج")
+
+# دالة الرسم
+fig = go.Figure(go.Indicator(
+    mode = "gauge+number",
+    value = 85, # ده الرقم اللي المؤشر هيقف عنده (تقدر تغيره)
+    domain = {'x': [0, 1], 'y': [0, 1]},
+    gauge = {
+        'axis': {'range': [None, 100]},
+        'bar': {'color': "black"},
+        'steps': [
+            {'range': [0, 50], 'color': "red"},
+            {'range': [50, 80], 'color': "yellow"},
+            {'range': [80, 100], 'color': "green"}
+        ],
+    }
+))
+
+st.plotly_chart(fig, use_container_width=True)
